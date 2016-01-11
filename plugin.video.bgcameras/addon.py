@@ -6,18 +6,23 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 params = GetParams()
 
-url = None
-try: url = params["url"]
+i = 0
+try: i = int(params["i"])
 except: pass
 
 mode = None
 try: mode = params["mode"]
 except: pass
 	
+c = None
+try: c = params["c"]
+except: pass
+	
 if mode == None: 
-	for camera in cameras:
-		AddItem(camera)
+	AddCategories()
+elif mode == "View":
+	AddItems(c)
 else: 
-	Play(url)
+	Play(i)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

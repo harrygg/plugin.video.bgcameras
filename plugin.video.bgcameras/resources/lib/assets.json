@@ -1,10 +1,169 @@
 {
-	"assets": [{
-		"n": "",
-		"u": "",
-		"d": "1"
-	}, {
-		"n": "0J/Qu9C+0LLQtNC40LIsINC20LogJ9Ci0YDQsNC60LjRjyfRgtGA0LDRhNC40Log0L7RgiDRhdC+0YLQtdC7ICdTUFMn",
-		"u": "cnRzcDovLzkxLjE5MS4yMTMuNTM6NTU0L2xpdmVfbXBlZzQuc2Rw"
-	}]
+    "assets": [
+        {
+            "n": "0KHQvtGE0LjRjywg0LHRg9C7LiDQkdGK0LvQs9Cw0YDQuNGP",
+            "c": "1",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8xL9Cx0YPQuy3QkdGK0LvQs9Cw0YDQuNGPLdCh0L7RhNC40Y8v",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvYWZYU0tJc2pObA==",
+            "i": "a1"
+        },
+        {
+            "n": "0KHQvtGE0LjRjywg0LHRg9C7LiDQktC40YLQvtGI0LA=",
+            "c": "1",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8yL9Cx0YPQuy3QktC40YLQvtGI0LAt0KHQvtGE0LjRjy8=",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvUGdwSW9LVE9XUQ==",
+            "i": "a2"
+        },
+        {
+            "n": "0KHQvtGE0LjRjywg0J3QsNGA0L7QtNC90L4g0YHRitCx0YDQsNC90LjQtQ==",
+            "c": "1",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy80L9Cd0LDRgNC+0LTQvdC+LdGB0YrQsdGA0LDQvdC40LUt0KHQvtGE0LjRjy8=",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvUDF6Tks0U2wzdA==",
+            "i": "a4"
+        },
+        {
+            "n": "0KHQvtGE0LjRjywg0L/Qu9C+0YnQsNC0INCS0LDRgdC40Lsg0JvQtdCy0YHQutC4",
+            "c": "1",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy81L9C/0LvQvtGJ0LDQtC3QktCw0YHQuNC7LdCb0LXQstGB0LrQuC3QodC+0YTQuNGPLw==",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvOUZLWWZlQTVubw==",
+            "i": "a5"
+        },
+        {
+            "n": "0KHQvtGE0LjRjywg0J7RgNC70L7QsiDQvNC+0YHRgg==",
+            "c": "0",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy82L9Ce0YDQu9C+0LIt0LzQvtGB0YIt0KHQvtGE0LjRjy8=",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvQnJKb0g5WVFqNg==",
+            "i": "a6"
+        },
+        {
+            "n": "0KHQvtGE0LjRjywg0LzQtdGC0YDQvtGB0YLQsNC90YbQuNGPINCh0LXRgNC00LjQutCw",
+            "c": "1",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy83L9C80LXRgtGA0L7RgdGC0LDQvdGG0LjRjy3QodC10YDQtNC40LrQsC3QodC+0YTQuNGPLw==",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvT3Q4MEtwZ2Q2aQ==",
+            "i": "a7"
+        },
+        {
+            "n": "0JPQsNCx0YDQvtCy0L4sINCa0L7Qu9C10LvQvtGC0L4=",
+            "c": "1",
+            "u": "aHR0cDovLzE4NS4yMC44OC4zOTo4ODk0",
+            "i": "a22"
+        },
+        {
+            "n": "0J/Qu9C+0LLQtNC40LIsINCc0LXQttC00YPQvdCw0YDQvtC00LXQvSDQn9Cw0L3QsNC40YA=",
+            "c": "2",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy84L9Cc0LXQttC00YPQvdCw0YDQvtC00LXQvS3Qn9Cw0L3QsNC40YAt0J/Qu9C+0LLQtNC40LIv",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvYWx3Wjl0YnhRUw==",
+            "i": "a8"
+        },
+        {
+            "n": "0J/Qu9C+0LLQtNC40LIsINC/0LvQvtGJ0LDQtCDQptC10L3RgtGA0LDQu9C10L0=",
+            "c": "2",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy85L9C/0LvQvtGJ0LDQtC3QptC10L3RgtGA0LDQu9C10L0t0J/Qu9C+0LLQtNC40LIv",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvR1pFUE1pOHJweQ==",
+            "i": "a9"
+        },
+        {
+            "n": "0J/Qu9C+0LLQtNC40LIsINC20LogJ9Ci0YDQsNC60LjRjycg0YLRgNCw0YTQuNC6INC+0YIg0YXQvtGC0LXQuyAnU1BT",
+            "c": "2",
+            "u": "cnRzcDovLzkxLjE5MS4yMTMuNTM6NTU0L2xpdmVfbXBlZzQuc2Rw",
+            "i": "a9119121353554"
+        },
+        {
+            "n": "0JLQsNGA0L3QsCwg0LHRg9C7LiDQpdGA0LjRgdGC0L4g0JHQvtGC0LXQsg==",
+            "c": "3",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8xMC/QsdGD0Lst0KXRgNC40YHRgtC+LdCR0L7RgtC10LIt0JLQsNGA0L3QsC8=",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvdEtsWnphWTBBaw==",
+            "i": "a10"
+        },
+        {
+            "n": "0JHRg9GA0LPQsNGBLCDQsdGD0LsuINCh0YLQtdGE0LDQvSDQodGC0LDQvNCx0L7Qu9C+0LI=",
+            "c": "3",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8xMS/QsdGD0Lst0KHRgtC10YTQsNC9LdCh0YLQsNC80LHQvtC70L7Qsi3QkdGD0YDQs9Cw0YEv",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvVWh5Z3Z1TE16eA==",
+            "i": "a11"
+        },
+        {
+            "n": "0JLQtdC70LjQutC+INCi0YrRgNC90L7QstC+LCDRg9C7LiDQnNCw0LPQuNGB0YLRgNCw0LvQvdCw",
+            "c": "3",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8xMi/Rg9C7LdCc0LDQs9C40YHRgtGA0LDQu9C90LAt0JLQtdC70LjQutC+LdCi0YrRgNC90L7QstC+Lw==",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvWGtjYm5aSEtkRQ==",
+            "i": "a12"
+        },
+        {
+            "i": "a13",
+            "c": 4,
+            "n": "0JHQvtGA0L7QstC10YYsINCm0LXQvdGC0YrRgA==",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvdG1jU1dNUnUzUQ==",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8xMy/QptC10L3RgtGK0YAt0JHQvtGA0L7QstC10YYt0JHQvtGA0L7QstC10YYv"
+        },
+        {
+            "i": "a23",
+            "c": 5,
+            "n": "0JfQu9Cw0YLQvdC4INCf0Y/RgdGK0YbQuCwg0KbQtdC90YLRitGA",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvWmVxY3R1MWpBeA==",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8yMy/QptC10L3RgtGK0YAt0JfQu9Cw0YLQvdC4LdC/0Y/RgdGK0YbQuC3Ql9C70LDRgtC90Lgt0L/Rj9GB0YrRhtC4Lw=="
+        },
+        {
+            "n": "0JHQtdGA0LrQvtCy0LjRhtCwLCDQptC10L3RgtGK0YA=",
+            "c": "3",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8yNC/QptC10L3RgtGK0YAt0JHQtdGA0LrQvtCy0LjRhtCwLdCR0LXRgNC60L7QstC40YbQsC8=",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvOGZRam9idXpBRw==",
+            "i": "a24"
+        },
+        {
+            "i": "a25",
+            "c": 5,
+            "n": "0J3QtdGB0LXQsdGK0YAsINCu0LbQtdC9INC/0LvQsNC2",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvQnhmZHFoVWNudw==",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8yNS/QrtC20LXQvS3Qv9C70LDQti3QndC10YHQtdCx0YrRgC8="
+        },
+        {
+            "i": "a26",
+            "c": 4,
+            "n": "0J/QsNC80L/QvtGA0L7QstC+LCDQodGC0YPQtNC10L3QtdGG",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvcUpjU0RURmQ5WQ==",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8yNi/QodGC0YPQtNC10L3QtdGGLdCf0LDQvNC/0L7RgNC+0LLQvi8="
+        },
+        {
+            "n": "0J/QsNC80L/QvtGA0L7QstC+LCDQv9C40YHRgtCwINCh0L3QtdC20LDQvdC60LA=",
+            "c": "3",
+            "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8yNy/Qv9C40YHRgtCwLdCh0L3QtdC20LDQvdC60LAt0J/QsNC80L/QvtGA0L7QstC+Lw==",
+            "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvcUpjU0RURmQ5WQ==",
+            "i": "a27"
+        },
+        {
+            "n": "0JPQsNCx0YDQvtCy0L4sINGG0LXQvdGC0YrRgCwg0YPQuy4g0KDQsNC00LXRhtC60LA=",
+            "c": "3",
+            "u": "aHR0cDovLzE4NS4yMC44OC4zOTo4ODg4",
+            "i": "a20"
+        },
+        {
+            "n": "0JPQsNCx0YDQvtCy0L4sINGG0LXQvdGC0YrRgCDQv9C7LiDQktGK0LfRgNCw0LbQtNCw0L3QtQ==",
+            "c": "1",
+            "u": "aHR0cDovLzE4NS4yMC44OC4zOTo4ODk2",
+            "i": "a21"
+        }
+    ],
+    "categories": [
+        {
+            "id": 1,
+            "name": "София"
+        },
+        {
+            "id": 2,
+            "name": "Пловдив"
+        },
+        {
+            "id": 3,
+            "name": "Други"
+        },
+        {
+            "id": 4,
+            "name": "Планински"
+        },
+        {
+            "id": 5,
+            "name": "Морски"
+        }
+    ]
 }
