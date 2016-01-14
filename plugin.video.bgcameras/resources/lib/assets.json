@@ -311,7 +311,7 @@
         },
         {
             "n": "0J/RgNC40LzQvtGA0YHQutC+LCDQodC10LLQtdGA",
-            "c": "5",
+            "c": "9",
             "u": "aHR0cDovL3MyLmlwY2FtbGl2ZS5jb20vc3RyZWFtcy8wMjU2OTNiMjlkOGY2YmNjYi9zdHJlYW0ubTN1OA==",
             "i": "a5693b41045158"
         },
@@ -350,6 +350,22 @@
             "name": "Пловдив"
         },
         {
+            "id": 6,
+            "name": "Варна"
+        },
+        {
+            "id": 7,
+            "name": "Габрово"
+        },
+        {
+            "id": 9,
+            "name": "Приморско"
+        },
+        {
+            "id": 8,
+            "name": "Пампорово"
+        },
+        {
             "id": 3,
             "name": "Други"
         },
@@ -360,22 +376,11 @@
         {
             "id": 5,
             "name": "Морски"
-        },
-        {
-            "id": 6,
-            "name": "Варна"
-        },
-        {
-            "id": 7,
-            "name": "Габрово"
-        },
-        {
-            "id": 8,
-            "name": "Пампорово"
-        },
-        {
-            "id": 9,
-            "name": "Приморско"
         }
-    ]
+    ],
+    "version": {
+        "major": 1,
+        "minor": 0,
+        "build": 25
+    }
 }
