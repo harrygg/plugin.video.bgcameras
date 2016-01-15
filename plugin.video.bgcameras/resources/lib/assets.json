@@ -9,7 +9,7 @@
         },
         {
             "n": "0KHQvtGE0LjRjywg0LHRg9C7LiDQktC40YLQvtGI0LA=",
-            "c": "1",
+            "c": "2",
             "pa": "aHR0cDovL2thbWVyaXRlLm5vdmF0di5iZy9jYW1lcmEvdmlldy8yL9Cx0YPQuy3QktC40YLQvtGI0LAt0KHQvtGE0LjRjy8=",
             "pl": "aHR0cDovL2kuY2RuLmJnL2xpdmUvUGdwSW9LVE9XUQ==",
             "i": "a2"
@@ -292,7 +292,7 @@
             "i": "a5693b21f02561"
         },
         {
-            "n": "0JHRg9GA0LPQsNGBLCDQv9C70L7RidCw0LQg0KLRgNCw0L/QtdC30LjRhtCw",
+            "n": "0JHRg9GA0LPQsNGBLCDQn9C70L7RidCw0LQg0KLRgNCw0L/QtdC30LjRhtCw",
             "c": "3",
             "u": "aHR0cDovL3JuLXR2LmNvbS9saXZlL3N0cmVhbS5tM3U4",
             "i": "a5693b308a6075"
@@ -304,7 +304,7 @@
             "i": "a5693b38c8bbe7"
         },
         {
-            "n": "0J/RgNC40LzQvtGA0YHQutC+LCDRgdGG0LXQvdCw0YLQsCDQvdCwINC/0LvQvtGJ0LDQtNCw",
+            "n": "0J/RgNC40LzQvtGA0YHQutC+LCDQodGG0LXQvdCw0YLQsCDQvdCwINC/0LvQvtGJ0LDQtNCw",
             "c": "9",
             "u": "aHR0cDovL3MyLmlwY2FtbGl2ZS5jb20vc3RyZWFtcy8wMjU2OTNiMmQxYmQzMDY5Yi9zdHJlYW0ubTN1OA==",
             "i": "a5693b3b37500e"
@@ -338,6 +338,30 @@
             "c": "9",
             "u": "aHR0cDovL3MzLmlwY2FtbGl2ZS5jb20vc3RyZWFtcy8wMzU2OTM0YjYwZWRkNzU0NC9zdHJlYW0ubTN1OA==",
             "i": "a5693b4ae12cbb"
+        },
+        {
+            "n": "0JLQuNGC0L7RiNCwLCDRhdC40LbQsCDQkNC70LXQutC+",
+            "c": "4",
+            "u": "cnRtcDovL3ZvZDEzMi53aXRtaW5kLmNvbToxOTM1L21vdGVuL2NhbTE=",
+            "i": "a5698a2add6ea2"
+        },
+        {
+            "n": "0JrQuNGC0LXQvSwg0J/RgNC40YHRgtCw0L3QuNGJ",
+            "c": "5",
+            "u": "cnRzcDovLzg0LjU0LjE1OC4xMTo1NTQvbGl2ZS9jaDAwXzA=",
+            "i": "a5698b0157b313"
+        },
+        {
+            "n": "0JrQuNGC0LXQvSwg0KbQtdC90YLRitGA",
+            "c": "5",
+            "u": "cnRzcDovLzg0LjU0LjE1OC4xMzo1NTQvbGl2ZS9jaDAwXzA=",
+            "i": "a5698b03241c9b"
+        },
+        {
+            "n": "0J/Qu9C+0LLQtNC40LIsINGD0LsuINCY0LLQsNC9INCS0LDQt9C+0LI=",
+            "c": "2",
+            "u": "cnRzcDovLzIxMi43My4xNTAuMjI4OjU1NA==",
+            "i": "a5698b0df37425"
         }
     ],
     "categories": [
@@ -350,22 +374,6 @@
             "name": "Пловдив"
         },
         {
-            "id": 6,
-            "name": "Варна"
-        },
-        {
-            "id": 7,
-            "name": "Габрово"
-        },
-        {
-            "id": 9,
-            "name": "Приморско"
-        },
-        {
-            "id": 8,
-            "name": "Пампорово"
-        },
-        {
             "id": 3,
             "name": "Други"
         },
@@ -376,11 +384,27 @@
         {
             "id": 5,
             "name": "Морски"
+        },
+        {
+            "id": 6,
+            "name": "Варна"
+        },
+        {
+            "id": 7,
+            "name": "Габрово"
+        },
+        {
+            "id": 8,
+            "name": "Пампорово"
+        },
+        {
+            "id": 9,
+            "name": "Приморско"
         }
     ],
     "version": {
         "major": 1,
         "minor": 0,
-        "build": 25
+        "build": 31
     }
 }
