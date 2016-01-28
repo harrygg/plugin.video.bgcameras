@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
-import re, sys, os.path, urllib, urllib2
+import sys
 from resources.lib.helper import *		
 
 reload(sys)  
