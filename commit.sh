@@ -1,5 +1,5 @@
 #!/bin/sh
-cd 'C:\Users\genevh\Documents\GitHub\plugin.video.bgcameras'
+cd '.\plugin.video.bgcameras'
 git checkout master
 git add .
 git commit -am "Regular update"
