@@ -1,5 +1,5 @@
 #!/bin/sh
-#cd '.\plugin.video.bgcameras'
+python .\download.py
 git checkout master
 git add .
 git commit -am "Regular update"
