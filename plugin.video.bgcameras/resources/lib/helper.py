@@ -8,7 +8,7 @@ clist = []
 categories = []
 id = 'plugin.video.bgcameras'
 ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25'
-
+	
 addon = xbmcaddon.Addon(id=id)
 res = None
 aName = 'assets.json'
@@ -24,7 +24,7 @@ remoteAssetsUrl =  'http://rawgit.com/harrygg/plugin.video.bgcameras/master/plug
 localAssetsPath =  addon.getSetting('file')
 usePrivateList = True if addon.getSetting('usePrivateList') == "1" else False
 privateListFile = addon.getSetting('privateListFile')
-privateCat = {"name":"Частни камери", "id":"0"}
+privateCat = {"name":"Частни камери", "id":"0", "count": 0}
 
 def Log(msg, level = xbmc.LOGERROR):
   xbmc.log(" | " + id + " | " + str(msg), level)  
@@ -97,8 +97,8 @@ def AppendPrivateCameras():
     with open(privateListFile) as f:
       try:
         c = f.read()
-        names = re.compile('#EXTINF:-1,(.*)').findall(c)
-        urls = re.compile('([http|rtsp|rtmp].*)').findall(c)
+        names = re.compile('#EXTINF:\-1,\s*(.*)').findall(c)
+        urls = re.compile('(http.*|rtsp.*|rtmp.*)').findall(c)
         if len(names) == len(urls):
           for i in range(0, len(names)):
             cam = {}
