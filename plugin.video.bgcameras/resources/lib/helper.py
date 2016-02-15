@@ -129,9 +129,31 @@ def AddItems(c):
       if showDisabledCams or Enabled(cam):
         AddItem(i)
 
+def GetImage(c):
+	try:
+		import time
+		ts = int(time.time())
+		l = base64.b64decode(c['l'])
+		if '?' in l:
+			if l.endswith('='):
+				return "%s%s" % (l,  ts)
+			else:
+				return "%s&amp;ts=%s" % (l,  ts)
+		else:
+			return "%s?ts=%s" % (l,  ts)
+	except:
+		return ''
+	#if 'l' in c.keys():
+	#	import time
+	#	ts = int(time.time())
+	#	return c['l'] + ts
+	#else:
+	#	return ''
+
 def AddItem(i):
   name = base64.b64decode(clist[i]['n'])
-  li = xbmcgui.ListItem(name, iconImage = "", thumbnailImage = "")
+  image = GetImage(clist[i])
+  li = xbmcgui.ListItem(name, iconImage = image, thumbnailImage = image)
   li.setInfo( type = "Video", infoLabels = { "Title" : name } )
   li.setProperty("IsPlayable", 'True')
   u = "%s?i=%s&mode=Play" % (sys.argv[0], i) #urllib.quote_plus(camera.url.encode('utf-8')))
@@ -139,6 +161,35 @@ def AddItem(i):
 
 def Play(i):
   xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, xbmcgui.ListItem(path = GetStream(i)))
+
+
+class StreamResolver:
+	stream = ''
+	reg_tag_video = 'video.+src[=\s"\']+(.+?)[\s"\']+'
+	
+	def __init__(self, pl, pa):
+		from urlparse import urlparse
+		parser = urlparse(pl)
+		self.hostname = parser.hostname
+		res = Request(pl, pa)
+		#if debug:
+		xbmc.log(res)
+		self.Resolve(res)
+		
+	def Resolve(self, res):
+		#ipcamlive.com streams
+		if self.hostname == 'ipcamlive.com':
+			self.stream = 'http://s2.ipcamlive.com/'
+			m = re.compile('address[=\s\'"]+(.*?)[\'"\s]+', re.DOTALL).findall(res)
+			if len(m) > 0:
+				self.stream = m[0]
+				m = re.compile('streamid[=\s\'"]+(.*?)[\'"\s]+', re.DOTALL).findall(res)
+				if len(m) > 0:
+					self.stream = '%s/streams/%s/stream.m3u8' % (self.stream, m[0])
+		else: #regular video stream
+			m = re.compile(self.reg_tag_video, re.DOTALL).findall(res)
+			if len(m) > 0:
+				self.stream = m[0]
 
 def GetStream(i):
   cam = clist[i]
@@ -148,10 +199,10 @@ def GetStream(i):
   elif 'pl' in cam.keys() and 'pa' in cam.keys():
     pl = base64.b64decode(cam['pl'])
     pa = base64.b64decode(cam['pa'])
-    res = Request(pl, pa) 
-    m = re.compile('video.+src[=\s"\']+(.+?)[\s"\']+', re.DOTALL).findall(res)
-    if m > 0:
-      stream = m[0]
+    
+    sr = StreamResolver(pl, pa)
+    stream = sr.stream
+
   Log(" | GetStream() will return %s" % stream)
   return stream
 
