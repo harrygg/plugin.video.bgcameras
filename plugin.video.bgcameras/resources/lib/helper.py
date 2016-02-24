@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
-import urllib, urllib2, re, xbmc, sys, json, os, xbmcgui, xbmcaddon, time, xbmcplugin, base64, gzip
+import urllib, urllib2, re, xbmc, sys, json, os, xbmcgui, xbmcaddon, time, xbmcplugin, base64, gzip, sqlite3
 from datetime import datetime, timedelta
 reload(sys)  
 sys.setdefaultencoding('utf8')
@@ -11,7 +11,7 @@ ua = 'Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (
 	
 addon = xbmcaddon.Addon(id=id)
 res = None
-aName = 'assets.json'
+aName = 'assets.sqlite'
 profile = xbmc.translatePath(addon.getAddonInfo('profile'))
 afp = os.path.join(profile, aName)
 #Settings
@@ -19,7 +19,7 @@ afp = os.path.join(profile, aName)
 showDisabledCams =  True if addon.getSetting('show_disabled') == "true" else False
 debug =  True if addon.getSetting('debug') == "true" else False
 useRemoteAssets = True# if addon.getSetting('listType') == "0" else False
-remoteAssetsUrl =  'http://rawgit.com/harrygg/plugin.video.bgcameras/master/plugin.video.bgcameras/resources/lib/assets.json.gz'
+remoteAssetsUrl =  'https://rawgit.com/harrygg/plugin.video.bgcameras/sqlite/plugin.video.bgcameras/resources/storage/assets.sqlite.gz'
 #remoteAssetsUrl =  'http://swvm1022.bgr.hp.com/assets.json.gz'
 localAssetsPath =  addon.getSetting('file')
 usePrivateList = True if addon.getSetting('usePrivateList') == "1" else False
@@ -63,7 +63,7 @@ def CreateDir(path):
 	except OSError as exc: # Guard against race condition
 		if exc.errno != errno.EEXIST:
 			raise
-				
+
 def DownloadAssets():
   try:
     path = afp if not remoteAssetsUrl.endswith('.gz') else afp + ".gz"
@@ -78,20 +78,28 @@ def DownloadAssets():
     raise
    
 def LoadAssets(file = ""):
-  global clist, categories
-  if file.endswith('.gz'):
-    df = gzip.open(file,'rb')
-  else:
-    df = open(file)
-  content = json.load(df)
-  df.close()
-  categories = content['categories']
-  clist = content['assets']
-  if usePrivateList and privateListFile != '': #if there are private cameras, append them to the list
-    AppendPrivateCameras()
-    categories.append(privateCat)
-  
- 
+	try:
+		global clist, categories
+		#categories = content['categories']
+		#if usePrivateList and privateListFile != '': #if there are private cameras, append them to the list
+		#  AppendPrivateCameras()
+		db = sqlite3.connect(file)
+		cursor = db.execute("SELECT * FROM cameras")
+		for row in cursor:
+			cam = Camera(row)
+			clist.append(cam)
+			#categories.append(privateCat)
+			
+		#cursor = db.execute("SELECT * FROM categories")
+		#for row in cursor:
+		#	categories.append(row[1])
+		db.close()
+	except Exception, er:
+		Log(er)
+	finally:
+		db.close()
+	
+
 def AppendPrivateCameras():
   if usePrivateList and privateListFile != '':
     with open(privateListFile) as f:
@@ -238,5 +246,5 @@ try:
   LoadAssets(afp)
 except Exception, er:
   Log(er)
-  LoadAssets(os.path.join(os.path.dirname(os.path.realpath(__file__)), aName))
+  LoadAssets(os.path.join('../storage', os.path.dirname(os.path.realpath(__file__)), aName))
   xbmc.executebuiltin('Notification(%s,%s,10000,%s)' % ('BG Cameras', 'Неуспешно сваляне на най-новият списък с камери',''))
