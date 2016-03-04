@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 import sys, os, re, sqlite3, requests, gzip, urllib2
+from xbmcswift2 import xbmc
 
 reload(sys)
 sys.setdefaultencoding('utf8')
 
 ### Class Categories
 class Category:
+
 	def __init__(self, attr):
 		self.id = attr[0]
 		self.name = attr[1]
 		self.count = attr[2]
 
+
 ### Class Camera
 class Camera:
+
 	def __init__(self, attr):
 		l = len(attr)
 		self.id = attr[0]
@@ -36,7 +40,7 @@ class Camera:
 			'Referer' : self.page_url }
 
 		r = requests.get(self.player_url, headers=headers)
-		parser = urlparse(self.page_url)
+		parser = urlparse(self.player_url)
 		if parser.hostname == 'ipcamlive.com':
 			m = re.compile('address[=\s\'"]+(.*?)[\'"\s]+', re.DOTALL).findall(r.text)
 			if len(m) > 0:
@@ -51,11 +55,11 @@ class Camera:
 		return stream
 
 	def get_stream(self):
-		if self.stream != None:
+		if self.stream != '' and self.stream != None:
 			return self.stream
-		elif self.stream_rtsp != None:
+		elif self.stream_rtsp != '' and self.stream_rtsp != None:
 			return self.stream_rtsp
-		elif self.player_url != None:
+		elif self.player_url != '' and self.player_url != None:
 			return self._resolve()
 		else: 
 			return ''
@@ -74,31 +78,38 @@ class Camera:
 		except:
 			return ''
 
+
 ### Class PrivateCameras
 class PrivateCameras:
-	def __init__(self, file):
+
+	def __init__(self, plugin):
+		self.plugin = plugin
 		self.id = 0
 		self.name = 'Частни камери'
 		self.cameras = []
 		self.count = 0
-		with open(file) as f:
-			try:
-				c = f.read()
-				names = re.compile('#EXTINF:\-1,\s*(.*)').findall(c)
-				urls = re.compile('(http.*|rtsp.*|rtmp.*)').findall(c)
-				
-				if len(names) == len(urls):
-					for i in range(0, len(names)):
-						cam = Camera(['p'+str(i), 0, 0, names[i], urls[i]])
-						self.cameras.append(cam)
-						self.count = self.count + 1
-			except Exception, er:
-				helper.plugin.log.error(str(er))
+
+		if plugin.addon.getSetting('usePrivateList') == "1":
+			plf = plugin.addon.getSetting('privateListFile')
+			if os.path.exists(plf):
+				with open(plf) as f:
+					try:
+						c = f.read()
+						names = re.compile('#EXTINF:\-1,\s*(.*)').findall(c)
+						urls = re.compile('(http.*|rtsp.*|rtmp.*)').findall(c)
+						if len(names) == len(urls):
+							for i in range(0, len(names)):
+								cam = Camera(['p'+str(i), 0, 0, names[i], urls[i]])
+								self.cameras.append(cam)
+								self.count = self.count + 1
+					except Exception, er:
+						self.plugin.log.error(str(er))
 
 	def get_camera(self, id = 'p'):
 		for c in self.cameras:
 			if c.id == id:
 				return Camera([c.id, 0, 0, c.name, c.stream])
+
 
 ### Class Helper
 class Helper:
@@ -106,61 +117,29 @@ class Helper:
 	def __init__(self, plugin):
 		self.plugin = plugin
 		self.local_db = os.path.join(plugin.storage_path, 'assets.sqlite')
-		self.use_private_list = True if plugin.addon.getSetting('usePrivateList') == "1" else False
-		if self.use_private_list:
-			self.private_list_file = plugin.addon.getSetting('privateListFile')
-		
-	def get_categories(self):
-		categories = []
-		conn = sqlite3.connect(self.local_db)
-		cursor = conn.execute('''
-			SELECT cat.id, cat.name, COUNT(*) 
-			FROM cameras AS cam 
-			JOIN categories AS cat 
-			WHERE cat.id == cam.category_id 
-			GROUP BY cam.category_id'''
-		)
+
+	def check_assets(self):
+		#Check whether the assets file is old
+		try:
+			from datetime import datetime, timedelta
+			if os.path.exists(self.local_db):
+				treshold = datetime.now() - timedelta(hours=6)
+				fileModified = datetime.fromtimestamp(os.path.getmtime(self.local_db))
+				if fileModified < treshold: #file is more than a day old
+					self.download_assets()
+			else: #file does not exist, perhaps first run
+					self.download_assets()
+		except Exception, er:
+			self.plugin.log.error(er)
+			xbmc.executebuiltin('Notification(%s,%s,10000,%s)' % ('БГ Камерите','Неуспешно сваляне на най-новия списък с камери',''))
+			assets = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../storage/assets.sqlite.gz')
+			self.extract(assets)
 	
-		for row in cursor:
-			cat = Category(row)
-			categories.append(cat)
-
-		if self.use_private_list and self.private_list_file != '':
-			pc = PrivateCameras(self.private_list_file)
-			categories.append(Category([pc.id, pc.name, pc.count]))
-		return categories
-	
-	def get_cameras(self, category_id = 1):
-		cameras = []
-		if int(category_id) != 0:
-			conn = sqlite3.connect(self.local_db)
-			cursor = conn.execute("SELECT * FROM cameras WHERE category_id == ?", category_id)
-			for row in cursor:
-				cam = Camera(row)
-				cameras.append(cam)
-		else:
-			pc = PrivateCameras(self.private_list_file)
-			cameras = pc.cameras
-		return cameras
-
-	def get_stream(self, camera_id = 1):
-		stream = ''
-		if 'p' not in camera_id:
-			conn = sqlite3.connect(self.local_db)
-			cursor = conn.execute("SELECT * FROM cameras WHERE id == ?", camera_id)
-			cam = Camera(cursor.fetchone())
-			stream = cam.get_stream()
-		else:
-			pc = PrivateCameras(self.private_list_file)
-			cam = pc.get_camera(camera_id)
-			stream = cam.stream
-		return stream
-
 	def download_assets(self):
 		try:
-			remote_db = 'http://rawgit.com/harrygg/plugin.video.bgcameras/master/plugin.video.bgcameras/resources/storage/assets.sqlite.gz'
-			plugin.log.info('Downloading assets from url: %s' % remote_db)
-			save_to_file = self.local_db if not remote_db.endswith('.gz') else self.local_db + ".gz"
+			remote_db = 'http://rawgit.com/harrygg/plugin.video.bgcameras/sqlite/plugin.video.bgcameras/resources/storage/assets.sqlite.gz?raw=true'
+			self.plugin.log.info('Downloading assets from url: %s' % remote_db)
+			save_to_file = self.local_db if '.gz' not in remote_db else self.local_db + ".gz"
 			f = urllib2.urlopen(remote_db)
 			with open(save_to_file, "wb") as code:
 				code.write(f.read())
@@ -179,4 +158,3 @@ class Helper:
 			out.close()
 		except:
 			raise
-

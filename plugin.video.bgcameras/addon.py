@@ -5,13 +5,12 @@ from resources.lib.classes import *
 
 reload(sys)
 sys.setdefaultencoding('utf8')
-
 plugin = Plugin('plugin.video.bgcameras')
 
 #plugin entry screen camera categories
 @plugin.route('/')
 def index():
-	cats = helper.get_categories()
+	cats = get_categories()
 	items = [{
 		'label': "%s (%s)" % (cat.name, cat.count), 
 		'path': plugin.url_for('show_category', category_id=cat.id), 
@@ -22,7 +21,7 @@ def index():
 #Display cameras for the provided category
 @plugin.route('/categories/<category_id>/')
 def show_category(category_id):
-	cams = helper.get_cameras(category_id)
+	cams = get_cameras(category_id)
 	items = [{
 		'label' : cam.name, 
 		'path' : plugin.url_for('play_stream', camera_id=cam.id),
@@ -34,30 +33,60 @@ def show_category(category_id):
 #Play camera stream
 @plugin.route('/cameras/<camera_id>/')
 def play_stream(camera_id):
-	stream = helper.get_stream(camera_id)
+	stream = get_stream(camera_id)
 	plugin.log.info('Playing url: %s' % stream)
 	plugin.set_resolved_url(stream)
 
+@plugin.cached(30)
+def get_categories():
+	conn = sqlite3.connect(helper.local_db)
+	cursor = conn.execute('''
+		SELECT cat.id, cat.name, COUNT(*) 
+		FROM cameras AS cam 
+		JOIN categories AS cat 
+		WHERE cat.id == cam.category_id 
+		GROUP BY cam.category_id'''
+	)
+	categories = [Category(row) for row in cursor] 
+	#Append private cameras if there are any
+	pc = PrivateCameras(plugin)
+	if pc.count > 0:
+		categories.append(Category([pc.id, pc.name, pc.count]))
+	return categories
+
+@plugin.cached(30)
+def get_cameras(category_id = 1):
+	cameras = []
+	if int(category_id) != 0: #Anything than 0 is private camera category
+		conn = sqlite3.connect(helper.local_db)
+		cursor = conn.execute('''SELECT * FROM cameras WHERE category_id == ?''', [category_id])
+		for row in cursor:
+			cam = Camera(row)
+			cameras.append(cam)
+	else:
+		pc = PrivateCameras(plugin)
+		cameras = pc.cameras
+	return cameras
+
+@plugin.cached(30)
+def get_stream(camera_id = 1):
+	stream = ''
+	if 'p' not in camera_id: #Anything that starts with p is private camera id
+		conn = sqlite3.connect(helper.local_db)
+		cursor = conn.execute('''SELECT * FROM cameras WHERE id == ?''', (camera_id,))
+		cam = Camera(cursor.fetchone())
+		stream = cam.get_stream()
+	else:
+		pc = PrivateCameras(plugin)
+		cam = pc.get_camera(camera_id)
+		stream = cam.stream
+	return stream
 
 helper = Helper(plugin)
-
-#Check whether the assets file is old
-try:
-	from datetime import datetime, timedelta
-	if os.path.exists(helper.local_db):
-		treshold = datetime.now() - timedelta(hours=6)
-		fileModified = datetime.fromtimestamp(os.path.getmtime(helper.local_db))
-		if fileModified < treshold: #file is more than a day old
-			helper.download_assets(helper.local_db)
-	else: #file does not exist, perhaps first run
-		helper.download_assets(helper.local_db)
-except Exception, er:
-	plugin.log.error(er)
-	xbmc.executebuiltin('Notification(%s,%s,10000,%s)' % ('БГ Камерите', 'Неуспешно сваляне. Ще се използва лакален списък с камери',''))
-	assets = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'resources/storage/assets.sqlite.gz')
-	helper.extract(assets)
+helper.check_assets()
 
 #Run addon
 if __name__ == '__main__':
-    plugin.run()
+	plugin.run()
 
+ 

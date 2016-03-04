@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="Общи">
+		<setting id="show_disabled" type="bool" label="Показвай деактивирани камери" default="false"/>
+		<setting type="sep"/>
+		<setting id="usePrivateList" type="enum" label="Добави частен списък с камери (m3u формат):" values="Не|Да"  default="0" />
+		<setting label="Път:" type="file" id="privateListFile" value="" visible="eq(-1,1)"/>
+	</category>
+</settings>
