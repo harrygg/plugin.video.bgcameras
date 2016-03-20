@@ -138,7 +138,7 @@ class Helper:
 	def download_assets(self):
 		try:
 			id = 'plugin.video.bgcameras'
-			remote_db = 'http://rawgit.com/harrygg/%s/sqlite/%s/resources/storage/assets.sqlite.gz?raw=true' % (id, id)
+			remote_db = 'http://rawgit.com/harrygg/%s/master/%s/resources/storage/assets.sqlite.gz?raw=true' % (id, id)
 			self.plugin.log.info('Downloading assets from url: %s' % remote_db)
 			save_to_file = self.local_db if '.gz' not in remote_db else self.local_db + ".gz"
 			f = urllib2.urlopen(remote_db)

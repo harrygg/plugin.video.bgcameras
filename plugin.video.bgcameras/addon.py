@@ -1,33 +1,3 @@
-<<<<<<< HEAD
-﻿# -*- coding: utf-8 -*-
-import sys
-from resources.lib.helper import *		
-
-reload(sys)  
-sys.setdefaultencoding('utf8')
-params = GetParams()
-	
-i = 0
-try: i = int(params["i"])
-except: pass
-
-mode = None
-try: mode = params["mode"]
-except: pass
-	
-c = None
-try: c = params["c"]
-except: pass
-	
-if mode == None: 
-	AddCategories()
-elif mode == "View":
-	AddItems(c)
-else: 
-	Play(i)
-
-xbmcplugin.endOfDirectory(int(sys.argv[1]))
-=======
 # -*- coding: utf-8 -*-
 import sys, os
 from xbmcswift2 import Plugin
@@ -129,4 +99,3 @@ if __name__ == '__main__':
 	plugin.run()
 
  
->>>>>>> refs/remotes/origin/sqlite
