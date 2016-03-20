@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys, os
-from xbmcswift2 import Plugin, xbmc
+from xbmcswift2 import Plugin
 from resources.lib.classes import *
 
 reload(sys)
@@ -10,25 +10,34 @@ plugin = Plugin('plugin.video.bgcameras')
 #plugin entry screen camera categories
 @plugin.route('/')
 def index():
-	cats = get_categories()
 	items = [{
 		'label': "%s (%s)" % (cat.name, cat.count), 
 		'path': plugin.url_for('show_category', category_id=cat.id), 
 		'is_playable': False
-	}	for cat in cats]
+	}	for cat in get_categories()]
 	return items
 
 #Display cameras for the provided category
 @plugin.route('/categories/<category_id>/')
 def show_category(category_id):
+	items = []
 	cams = get_cameras(category_id)
-	items = [{
-		'label' : cam.name, 
-		'path' : plugin.url_for('play_stream', camera_id=cam.id),
-		'icon' : cam.get_icon(),
-		'is_playable' : True
-	}	for cam in cams]
-	return items
+	for cam in cams:
+		if cam.stream != '':
+			path = cam.stream
+		elif cam.stream_rtsp != '':
+			path = cam.stream_rtsp
+		else:
+			path = plugin.url_for('play_stream', camera_id=cam.id)
+		
+		items.append({
+			'label' : cam.name, 
+			'path' : path,
+			'icon' : cam.get_icon(),
+			'is_playable' : True
+		})
+
+	return plugin.finish(items, view_mode=500)	
 
 #Play camera stream
 @plugin.route('/cameras/<camera_id>/')
@@ -37,7 +46,7 @@ def play_stream(camera_id):
 	plugin.log.info('Playing url: %s' % stream)
 	plugin.set_resolved_url(stream)
 
-@plugin.cached(30)
+@plugin.cached(240)
 def get_categories():
 	conn = sqlite3.connect(helper.local_db)
 	cursor = conn.execute('''
@@ -54,7 +63,7 @@ def get_categories():
 		categories.append(Category([pc.id, pc.name, pc.count]))
 	return categories
 
-@plugin.cached(30)
+@plugin.cached(240)
 def get_cameras(category_id = 1):
 	cameras = []
 	if int(category_id) != 0: #Anything than 0 is private camera category
@@ -68,7 +77,7 @@ def get_cameras(category_id = 1):
 		cameras = pc.cameras
 	return cameras
 
-@plugin.cached(30)
+@plugin.cached(240)
 def get_stream(camera_id = 1):
 	stream = ''
 	if 'p' not in camera_id: #Anything that starts with p is private camera id

@@ -22,9 +22,9 @@ class Camera:
 		self.id = attr[0]
 		self.inactive = attr[2]
 		self.name = attr[3]
-		self.stream = attr[4]
+		self.stream = '' if attr[4] == None else attr[4]
 		if l > 5:
-			self.stream_rtsp = attr[5]
+			self.stream_rtsp = '' if attr[5] == None else attr[5]
 			if l > 6:
 				self.player_url = attr[6]
 				if l > 7:
@@ -137,7 +137,8 @@ class Helper:
 	
 	def download_assets(self):
 		try:
-			remote_db = 'http://rawgit.com/harrygg/plugin.video.bgcameras/sqlite/plugin.video.bgcameras/resources/storage/assets.sqlite.gz?raw=true'
+			id = 'plugin.video.bgcameras'
+			remote_db = 'http://rawgit.com/harrygg/%s/sqlite/%s/resources/storage/assets.sqlite.gz?raw=true' % (id, id)
 			self.plugin.log.info('Downloading assets from url: %s' % remote_db)
 			save_to_file = self.local_db if '.gz' not in remote_db else self.local_db + ".gz"
 			f = urllib2.urlopen(remote_db)
