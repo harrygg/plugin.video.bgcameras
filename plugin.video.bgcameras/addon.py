@@ -46,8 +46,9 @@ def play_stream(camera_id):
 	plugin.log.info('Playing url: %s' % stream)
 	plugin.set_resolved_url(stream)
 
-@plugin.cached(240)
+#@plugin.cached(240)
 def get_categories():
+	helper.update('browse', 'Categories')
 	conn = sqlite3.connect(helper.local_db)
 	cursor = conn.execute('''
 		SELECT cat.id, cat.name, COUNT(*) 
@@ -63,7 +64,7 @@ def get_categories():
 		categories.append(Category([pc.id, pc.name, pc.count]))
 	return categories
 
-@plugin.cached(240)
+#@plugin.cached(240)
 def get_cameras(category_id = 1):
 	cameras = []
 	if int(category_id) != 0: #Anything than 0 is private camera category
@@ -77,7 +78,7 @@ def get_cameras(category_id = 1):
 		cameras = pc.cameras
 	return cameras
 
-@plugin.cached(240)
+#@plugin.cached(240)
 def get_stream(camera_id = 1):
 	stream = ''
 	if 'p' not in camera_id: #Anything that starts with p is private camera id

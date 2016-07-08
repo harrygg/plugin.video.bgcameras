@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys, os, re, sqlite3, requests, gzip, urllib2
 from xbmcswift2 import xbmc
+from ga import ga
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -137,6 +138,7 @@ class Helper:
 	
 	def download_assets(self):
 		try:
+			self.update('download', 'get_db')
 			id = 'plugin.video.bgcameras'
 			remote_db = 'http://rawgit.com/harrygg/%s/master/%s/resources/storage/assets.sqlite.gz?raw=true' % (id, id)
 			self.plugin.log.info('Downloading assets from url: %s' % remote_db)
@@ -159,3 +161,14 @@ class Helper:
 			out.close()
 		except:
 			raise
+			
+	def update(self, name, location, crash=None):
+		p = {}
+		p['an'] = self.plugin.name
+		p['av'] = self.plugin.addon.getAddonInfo('version')
+		p['ec'] = 'Addon actions'
+		p['ea'] = name
+		p['ev'] = '1'
+		p['ul'] = xbmc.getLanguage()
+		p['cd'] = location
+		ga('UA-79422131-6').update(p, crash)
