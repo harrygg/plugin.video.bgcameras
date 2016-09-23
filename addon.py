@@ -104,9 +104,7 @@ def update(name, location, crash=None):
   p['cd'] = location
   ga('UA-79422131-6').update(p, crash)
   
-#helper = Helper(plugin)
-#helper.check_assets()
-url = 'https://github.com/harrygg/plugin.video.bgcameras/raw/master/resources/storage/assets.db'
+url = 'https://github.com/harrygg/plugin.video.bgcameras/raw/master/resources/assets.db'
 local_db = xbmc.translatePath(os.path.join( 'resources', 'assets.db' ))
 a = Assets(plugin.storage_path, url, local_db, xbmc.log)
 db = a.file
