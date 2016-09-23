@@ -117,14 +117,14 @@ class Helper:
 
 	def __init__(self, plugin):
 		self.plugin = plugin
-		self.local_db = os.path.join(plugin.storage_path, 'assets.sqlite')
+		self.local_db = os.path.join(plugin.storage_path, 'assets.db')
 
 	def check_assets(self):
 		#Check whether the assets file is old
 		try:
 			from datetime import datetime, timedelta
 			if os.path.exists(self.local_db):
-				treshold = datetime.now() - timedelta(hours=6)
+				treshold = datetime.now() - timedelta(hours=24)
 				fileModified = datetime.fromtimestamp(os.path.getmtime(self.local_db))
 				if fileModified < treshold: #file is more than a day old
 					self.download_assets()
@@ -133,14 +133,15 @@ class Helper:
 		except Exception, er:
 			self.plugin.log.error(er)
 			xbmc.executebuiltin('Notification(%s,%s,10000,%s)' % ('БГ Камерите','Неуспешно сваляне на най-новия списък с камери',''))
-			assets = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../storage/assets.sqlite.gz')
+			assets = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../storage/assets.db')
 			self.extract(assets)
 	
 	def download_assets(self):
 		try:
 			self.update('download', 'get_db')
 			id = 'plugin.video.bgcameras'
-			remote_db = 'http://rawgit.com/harrygg/%s/master/%s/resources/storage/assets.sqlite.gz?raw=true' % (id, id)
+			#remote_db = 'http://rawgit.com/harrygg/%s/master/%s/resources/storage/assets.sqlite.gz?raw=true' % (id, id)
+			remote_db = 'https://github.com/harrygg/raw/master/resources/storage/assets.db.gz' % id
 			self.plugin.log.info('Downloading assets from url: %s' % remote_db)
 			save_to_file = self.local_db if '.gz' not in remote_db else self.local_db + ".gz"
 			f = urllib2.urlopen(remote_db)
@@ -162,13 +163,3 @@ class Helper:
 		except:
 			raise
 			
-	def update(self, name, location, crash=None):
-		p = {}
-		p['an'] = self.plugin.name
-		p['av'] = self.plugin.addon.getAddonInfo('version')
-		p['ec'] = 'Addon actions'
-		p['ea'] = name
-		p['ev'] = '1'
-		p['ul'] = xbmc.getLanguage()
-		p['cd'] = location
-		ga('UA-79422131-6').update(p, crash)

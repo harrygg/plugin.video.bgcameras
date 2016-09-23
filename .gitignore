@@ -2,3 +2,4 @@ build_output.txt
 channels.txt
 build.py
 build.bat
+*.pyo

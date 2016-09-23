@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-import sys, os
+import sys, os, xbmc
 from xbmcswift2 import Plugin
 from resources.lib.classes import *
+from resources.lib.assets import *
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -48,8 +49,8 @@ def play_stream(camera_id):
 
 #@plugin.cached(240)
 def get_categories():
-	helper.update('browse', 'Categories')
-	conn = sqlite3.connect(helper.local_db)
+	update('browse', 'Categories')
+	conn = sqlite3.connect(db)
 	cursor = conn.execute('''
 		SELECT cat.id, cat.name, COUNT(*) 
 		FROM cameras AS cam 
@@ -68,7 +69,7 @@ def get_categories():
 def get_cameras(category_id = 1):
 	cameras = []
 	if int(category_id) != 0: #Anything than 0 is private camera category
-		conn = sqlite3.connect(helper.local_db)
+		conn = sqlite3.connect(db)
 		cursor = conn.execute('''SELECT * FROM cameras WHERE category_id == ?''', [category_id])
 		for row in cursor:
 			cam = Camera(row)
@@ -82,7 +83,7 @@ def get_cameras(category_id = 1):
 def get_stream(camera_id = 1):
 	stream = ''
 	if 'p' not in camera_id: #Anything that starts with p is private camera id
-		conn = sqlite3.connect(helper.local_db)
+		conn = sqlite3.connect(db)
 		cursor = conn.execute('''SELECT * FROM cameras WHERE id == ?''', (camera_id,))
 		cam = Camera(cursor.fetchone())
 		stream = cam.get_stream()
@@ -92,11 +93,24 @@ def get_stream(camera_id = 1):
 		stream = cam.stream
 	return stream
 
-helper = Helper(plugin)
-helper.check_assets()
+def update(name, location, crash=None):
+  p = {}
+  p['an'] = plugin.name
+  p['av'] = plugin.addon.getAddonInfo('version')
+  p['ec'] = 'Addon actions'
+  p['ea'] = name
+  p['ev'] = '1'
+  p['ul'] = xbmc.getLanguage()
+  p['cd'] = location
+  ga('UA-79422131-6').update(p, crash)
+  
+#helper = Helper(plugin)
+#helper.check_assets()
+url = 'https://github.com/harrygg/plugin.video.bgcameras/raw/master/resources/storage/assets.db'
+local_db = xbmc.translatePath(os.path.join( 'resources', 'assets.db' ))
+a = Assets(plugin.storage_path, url, local_db, xbmc.log)
+db = a.file
 
 #Run addon
 if __name__ == '__main__':
 	plugin.run()
-
- 
